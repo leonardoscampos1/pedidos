@@ -124,13 +124,7 @@ if not df_pedidos.empty:
     # Download Excel com nome do cliente e filial
     arquivo_excel = f"pedidos_{st.session_state.cliente_nome}_Filial{st.session_state.filial}.xlsx"
     df_pedidos.to_excel(arquivo_excel, index=False)
-    st.download_button(
-        label="⬇️ Baixar pedidos em Excel",
-        data=open(arquivo_excel, "rb").read(),
-        file_name=arquivo_excel,
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-
+    
     # Remover produto
     produto_remover = st.selectbox(
         "Selecione um produto para remover:",
@@ -146,5 +140,11 @@ if not df_pedidos.empty:
         conn.commit()
         st.success(f"Produto {produto_remover} removido com sucesso!")
         st.rerun()
+        st.download_button(
+        label="⬇️ Baixar pedidos em Excel",
+        data=open(arquivo_excel, "rb").read(),
+        file_name=arquivo_excel,
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 else:
     st.info("Nenhum pedido salvo para este cliente/filial/sistema.")
